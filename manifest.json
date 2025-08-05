@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Legal One Custom Calendar",
+  "version": "1.0",
+  "description": "Personalização da agenda do legal one",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://cscadv.novajus.com.br/agenda/compromissotarefa"
+  ],
+  "action": {
+    "default_title": "Legal One Custom Calendar"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://cscadv.novajus.com.br/agenda/compromissotarefa"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

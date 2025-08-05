@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Legal One Custom Calendar</h1>
+
+    <div class="section">
+      <label for="className">Target Class Name:</label>
+      <input type="text" id="className" placeholder="e.g., calendar-event-container" value="calendar-event-container">
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3>Configuração de Regex</h3>
+        <button id="addRegex" class="add-button">+ Adicionar novo Regex</button>
+      </div>
+      <div id="regexList" class="regex-list"></div>
+    </div>
+
+    <div class="section">
+      <h3>Ações</h3>
+      <div class="config-buttons">
+        <button id="exportConfig">Exportar configurações</button>
+        <button id="importConfig">Importar configurações</button>
+        <input type="file" id="fileInput" accept=".json" style="display: none;">
+        <button id="resetSettings">Restaurar</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <button id="applySettings" class="primary-button">Aplicar tudo</button>
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <!-- Regex Configuration Template -->
+  <template id="regexTemplate">
+    <div class="regex-config">
+      <div class="regex-header">
+        <input type="text" class="regex-name" placeholder="Configuration Name">
+        <div class="regex-controls">
+          <button class="toggle-config"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+          <button class="duplicate-config"><i class="fa fa-clone" aria-hidden="true"></i></button>
+          <button class="delete-config"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <div class="regex-content">
+        <div class="form-group">
+          <label>Padrão regex:</label>
+          <input type="text" class="regex-pattern" placeholder="e.g., \\d{2}/\\d{2}">
+        </div>
+
+        <div class="style-option">
+          <input type="checkbox" class="enable-config">
+          <label>Habilitar personalização</label>
+        </div>
+
+        <div class="styling-section">
+          <h4>Opções de estilo</h4>
+
+          <div class="style-option">
+            <input type="checkbox" class="enable-background">
+            <label>Cor de fundo:</label>
+            <input type="color" class="background-color" value="#ffff00" name="background-color" disabled>
+          </div>
+
+          <div class="style-option">
+            <input type="checkbox" class="enable-border">
+            <label>Cor da borda:</label>
+            <input type="color" class="border-color" value="#ff0000" disabled>
+          </div>
+
+          <div class="style-option">
+            <input type="checkbox" class="enable-font-size">
+            <label>Tamanho da fonte (px):</label>
+            <input type="number" class="font-size" value="16" min="8" max="72" disabled>
+          </div>
+
+          <div class="style-option">
+            <input type="checkbox" class="enable-font-color">
+            <label>Cor da fonte:</label>
+            <input type="color" class="font-color" value="#000000" disabled>
+          </div>
+        </div>
+
+        <div class="badge-section">
+          <h4>Balão tempo restante</h4>
+
+          <div class="style-option">
+            <input type="checkbox" class="enable-badge">
+            <label>Habilitar balão</label>
+          </div>
+
+          <div class="thresholds-container">
+            <div class="thresholds-header">
+              <h5>Cores por faixa:</h5>
+              <button class="add-threshold">+ Adicionar faixa</button>
+            </div>
+            <div class="thresholds-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Threshold Template -->
+  <template id="thresholdTemplate">
+    <div class="threshold-item">
+      <select class="threshold-operator">
+        <option value="<=">&le;</option>
+        <option value="=">=</option>
+        <option value=">">></option>
+        <option value="<">&lt;</option>
+        <option value=">=">&ge;</option>
+      </select>
+      <input type="number" class="threshold-value" min="0" value="1">
+      <label>dias </label>
+      <input type="color" class="threshold-color" value="#ff0000">
+      <button class="remove-threshold"><i class="fa fa-trash" aria-hidden="true"></i></button>
+    </div>
+  </template>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
